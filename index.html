@@ -2,38 +2,48 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Hello, WebVR! � A-Frame</title>
-    <meta name="description" content="Hello, WebVR! � A-Frame">
+    <title>The Neural Lace Podcast</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame">
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
   </head>
   <body>
-    <a-scene background="color: #ECECEC">
-      <a-entity text="value: Hello World;"></a-entity>
-      
-      
-      
-      
-    </a-scene>
-
+    <a-scene background="color: white">
       <a-assets>
-            <img id="my-image" src="https://pbs.twimg.com/media/DpRYUEHUYAAUtNY.jpg:large">
- 
-            </a-assets>
-
-            <!-- Using the asset management system. -->
-            <a-image src="#my-image" width="5" height="8" position="0 0 -4"></a-image>
-
-            <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
-            <!--<a-image src="img/BatmanvSuperman.jpg" width="16" height="9"></a-image>-->      
+      <img id="my-image" src="https://cdn-images-1.medium.com/max/540/1*Q-TCiSwVukvsvucQq-d7ng.jpeg">
+      <img id="faced" src="https://cdn-images-1.medium.com/max/900/1*vzrpdppDwAEeGUu5FI0L7Q.jpeg">
+        
+      </a-assets>
+      
+ <!-- this is commented out code script, assets go above this line everything that you want visible goes below inside the scene, code goes after the scene, 
+      -->
 
 
+      <!-- this is text on the left wall -->
+      <a-text position="-3.5 4 -3" rotation="0 35 0" color="black" width="3.5" value="The title of the story"></a-text>
+      
+      <!-- this is the colorful (transparent)plane with text on it on the left-->
+      <a-text color="black" font="dejavu" geometry="primitive: plane; width: 4; height: 2.5" position="-3.5 2 -2" rotation="0 35 0" anchor="center" align="left" width="3.5" material="color: none" value="Alphine Unicorn The folks at Oculus are focused on getting this feature working in the core software stack and if they do this means that you will be able to play the apps you purchased on the Oculus Rift on the Oculus Quest, powered by your desktop GPU, but sent wirelessly over wifi to your Quest, to be played in the 5x5 meter space that Oculus Quest is expected to support at launch. Even if Oculus doesn’t accomplish their own version of this kind of streaming their will be 3rd party options to do this SVGN.io News has learned."></a-text>
 
-<a-entity daydream-controls></a-entity>
+
+
+      <!-- this is the floating black text header/headline-->
+      <a-entity position="0 3.5 -4"  text="font: aileronsemibold; anchor: center; align: left; width: 3.5; color: black; value: The Oculus Quest is capable of streaming desktop Oculus Rift VR apps over wifi like the Vive Focus can stream Viveport Desktop apps."></a-entity>
+      
+      <!-- this is the colorful (green)plane with text on it in front of you-->
+      <a-text font="dejavu" geometry="primitive: plane; width: 4; height: 2.5" position="0 2 -4" anchor="center" align="left" width="3.5" material="color: #8cacff" value="The folks at Oculus are focused on getting this feature working in the core software stack and if they do this means that you will be able to play the apps you purchased on the Oculus Rift on the Oculus Quest, powered by your desktop GPU, but sent wirelessly over wifi to your Quest, to be played in the 5x5 meter space that Oculus Quest is expected to support at launch. Even if Oculus doesn’t accomplish their own version of this kind of streaming their will be 3rd party options to do this SVGN.io News has learned."></a-text>
+      <!-- this is the colorful (grey)plane with text on it in front of you-->
+      <a-text font="dejavu" geometry="primitive: plane; width: 4; height: 2.5" position="0 -0.5 -4" rotation="0 0 0" anchor="center" align="left" width="3.5" material="color: #7c7c7c" value="The folks at Oculus are focused on getting this feature working in the core software stack and if they do this means that you will be able to play the apps you purchased on the Oculus Rift on the Oculus Quest, powered by your desktop GPU, but sent wirelessly over wifi to your Quest, to be played in the 5x5 meter space that Oculus Quest is expected to support at launch. Even if Oculus doesn’t accomplish their own version of this kind of streaming their will be 3rd party options to do this SVGN.io News has learned."></a-text>
+      
+      <a-image src="#my-image" width="4.5" height="3" position="3.5 0 -2" rotation="0 -35 0"></a-image>
+      <a-image src="#faced" width="3" height="2" position="-3.5 -2 -2" rotation="0 35 0"></a-image>
+      
+      
       <a-entity gearvr-controls></a-entity><a-entity laser-controls raycaster="objects: .links; far: 5" line="color: red; opacity: 0.75"></a-entity>
       <a-box position="4 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
       <a-sphere position="5 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
       <a-cylinder position="5 0.75 -3" radius="0.5" height="1.5" color="#FFC65D" shadow></a-cylinder>
       <a-plane position="5 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow></a-plane>
 
+    </a-scene>
   </body>
 </html>
