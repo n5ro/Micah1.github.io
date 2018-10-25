@@ -11,11 +11,12 @@
       <a-assets>
       <img id="my-image" src="https://cdn-images-1.medium.com/max/540/1*Q-TCiSwVukvsvucQq-d7ng.jpeg">
       <img id="faced" src="https://cdn-images-1.medium.com/max/900/1*vzrpdppDwAEeGUu5FI0L7Q.jpeg">
-        
+      <a-asset-item id="merccar" src="/assets/merccar/scene.gltf"></a-asset-item>  
       <a-asset-item id="scene" src="/assets/Postwarcity/scene.gltf"></a-asset-item>
       </a-assets>
       
-      <a-entity gltf-model="#scene"></a-entity>    
+      <a-gltf-model src="#scene"></a-gltf-model>    
+      <a-entity gltf-model="#merccar" position="3 -3 -3"></a-entity>    
       
       
       <!-- this is comment out script -->
