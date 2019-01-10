@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The Neural Lace Podcast</title>
+    <meta name="description" content="The Neural Lace Podcast Season 2 Episode 2">
+    <!--script src="https://aframe.io/releases/0.8.2/aframe.min.js">//thepoint was to create a butterfly that had basic controllers and the color design from https://thundering-velvet.glitch.me/</script-->
+    <script src="https://cdn.jsdelivr.net/gh/Micah1/Micah1.github.io@cdfc94f4752bc133b1e29a1109f2e32294807056/scripts/thumblaser.js"></script>
+    <script src="my-laser-controls.js"></script>
+    <script src="https://unpkg.com/aframe-thumb-controls-component@1.1.0/dist/aframe-thumb-controls-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-log-component/dist/aframe-log-component.min.js"></script> 
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+    
+    <script>
+      (function() {
+        var log_history = [];
+        var menu_open = true;
+        var whistle_open = false;
+        var sound_open = false;
+        var fire_open = false;
+        var red_open = false;
+        var MAX_LOGS = null;
+        function VR_LOG(data) {
+            log_history.push(JSON.stringify(data));
+            if (MAX_LOGS && log_history.length > MAX_LOGS) {
+              log_history.shift()
+            }
+            const console = document.getElementById('vr_console');
+            if (console) { console.setAttribute('value', log_history.join('\n')); }
+        } 
+         window.onerror = e => VR_LOG("error" + e);
+        const CLAMP_VELOCITY = 0.01;
+        const MAX_DELTA = 0.2;
+        const EPS = 10e-6;
+        const MAX_WARNINGS = 10;
+        const PI_2 = Math.PI / 2;
+
+        //
+AFRAME.registerComponent("bella", {
+                init: function() {
+                  this.el.addEventListener("mouseenter", (e) => {
+                   VR_LOG('catbella')
+                   let bitems = document.querySelectorAll(".cat")
+                    bitems.forEach(function(el) {
+                        el.object3D.scale.set(0, 0, 0);
+                    })
+                  });
+                  this.el.addEventListener("mouseenter", () => {
+                         VR_LOG('cat');  
+                         document.getElementByID('#cat').emit('scale_position_button_cat')
+                         });
+                  
+                  /*this.el.addEventListener('thumbleftstart', () => {
+                       VR_LOG('thumbleftstart');
+                       document.querySelectorAll('.menu_plane').forEach(function(e){
+                        e.object3D.visible = false;
+                        e.emit('close_the_menu')
+                        });
+                    });*/
+                  this.el.addEventListener("click",(e) => {
+                          VR_LOG('whistleclicked')
+                            if (whistle_open) {
+                             document.querySelectorAll('.whistle').forEach(function(e){
+                                  e.emit('whistle_close');
+                               });
+                            whistle_open = false;
+                                } else {
+                                  VR_LOG('whistlemustclose');
+                                  document.querySelectorAll('.whistle').forEach(function(e){
+                                    e.emit('whistle_open');
+                                  });
+                                 whistle_open = true;
+                           };
+                          });
+                  
+  }
+});
+
+AFRAME.registerComponent("citizen", {
+                        init: function() {
+                        this.el.addEventListener("mouseenter", (e) => {
+                         VR_LOG('dogcitizen')
+                         let bitems = document.querySelectorAll(".dog")
+                          bitems.forEach(function(el) {
+                              el.object3D.scale.set(0, 0, 0);
+                          })
+                        });
+                        this.el.addEventListener("mouseenter", (e) => {
+                         VR_LOG('citizen')  
+                         document.getElementByID('dog').emit('scale_position_button_dog')
+                         });
+                        this.el.addEventListener("click",(e) => {
+                          VR_LOG('soundclicked')
+                            if (sound_open) {
+                             document.querySelectorAll('.sound').forEach(function(e){
+                                  e.emit('sound_close');
+                               });
+                              
+                            sound_open = false;
+                                } else {
+                                  VR_LOG('soundmustclose');
+                                  document.querySelectorAll('.sound').forEach(function(e){
+                                    e.emit('sound_open');
+                                  });
+                                 sound_open = true;
+                           };
+                          });
+                          
+  }
+});
+                        
+AFRAME.registerComponent("dragon", {
+                        init: function() {
+                        this.el.addEventListener("mouseenter", (e) => {
+                         VR_LOG('snaildragon')
+                         let bitems = document.querySelectorAll(".snail")
+                          bitems.forEach(function(el) {
+                              el.object3D.scale.set(0, 0, 0);
+                          })
+                        });
+                        this.el.addEventListener("mouseenter", (e) => {
+                         VR_LOG('citizen')  
+                         document.getElementByID('snail').emit('scale_position_button_snail')
+                         });
+                        this.el.addEventListener("mouseenter", (e) => {
+                         VR_LOG('dragon') 
+                           let ditems = document.querySelectorAll(".snail")
+                            ditems.forEach(function(el) {
+                                el.object3D.scale.set(0, 0, 0);
+                            });
+                          });
+                         
+                        this.el.addEventListener("click",(e) => {
+                          VR_LOG('fireclicked')
+                            if (fire_open) {
+                             document.querySelectorAll('.fire').forEach(function(e){
+                                  e.emit('fire_close');
+                               });
+                            fire_open = false;
+                                } else {
+                                  VR_LOG('firemustclose');
+                                  document.querySelectorAll('.fire').forEach(function(e){
+                                    e.emit('fire_open');
+                                  });
+                                 fire_open = true;
+                           };
+                          });
+  }
+});
+                
+AFRAME.registerComponent("apple", {
+                        init: function() {
+                        this.el.addEventListener("mouseenter", (e) => {
+                         VR_LOG('cloudapple')
+                         let bitems = document.querySelectorAll(".cloud")
+                          bitems.forEach(function(el) {
+                              el.object3D.scale.set(0, 0, 0);
+                          })
+                        });
+                        this.el.addEventListener("mouseenter", (e) => {
+                         VR_LOG('citizen')  
+                         document.getElementByID('cloud').emit('scale_position_button_cloud')
+                        });
+                        this.el.addEventListener("click",(e) => {
+                          VR_LOG('redclicked')
+                            if (red_open) {
+                             document.querySelectorAll('.red').forEach(function(e){
+                                  e.emit('red_close');
+                               });
+                            red_open = false;
+                                } else {
+                                  VR_LOG('redmustclose');
+                                  document.querySelectorAll('.red').forEach(function(e){
+                                    e.emit('red_open');
+                                  });
+                                 red_open = true;
+                           };
+                          });
+                        }
+});
+       
+
+        
+        
+AFRAME.registerComponent('thumb-movement-controls', {
+          init: function () {
+            //up controller is down and down is up: fyi
+            this.el.addEventListener('thumbupstart', () => {
+               VR_LOG('thumbupstart');
+               
+            });
+            this.el.addEventListener('thumbupend', () => {
+               VR_LOG('thumbupend');
+               
+            });
+            this.el.addEventListener('thumbrightstart', () => {
+               VR_LOG('thumbrightstart');
+               document.querySelector('a-scene').emit("rotateright");
+            });
+            this.el.addEventListener('thumbrightstart', () => {
+               VR_LOG('thumbrightstart');
+               document.querySelectorAll('.menu_plane').forEach(function(e){
+                e.object3D.visible = false;
+                e.emit('close_the_menu')
+                });
+            });
+            this.el.addEventListener('thumbrightend', () => {
+               VR_LOG('thumbrightend');
+               document.querySelectorAll('.menu_plane').forEach(function(e){
+                e.object3D.visible = true;
+                });
+            });
+            this.el.addEventListener('thumbleftstart', () => {
+               VR_LOG('thumbleftstart');
+               document.querySelector('a-scene').emit("rotateleft");
+            });
+            this.el.addEventListener('thumbleftstart', () => {
+               VR_LOG('thumbleftstart');
+               document.querySelectorAll('.menu_plane').forEach(function(e){
+                e.object3D.visible = false;
+                e.emit('close_the_menu')
+                });
+            });
+            this.el.addEventListener('thumbleftend', () => {
+               VR_LOG('thumbleftend');
+               document.querySelectorAll('.menu_plane').forEach(function(e){
+                e.object3D.visible = true;
+                 });
+            });
+            this.el.addEventListener('thumbdownstart', () => {
+               VR_LOG('thumbupstart');
+              document.querySelectorAll('.menu_plane').forEach(function(e){
+                e.object3D.visible = false;
+                e.emit('close_the_menu')                
+            })
+            });
+            this.el.addEventListener('thumbdownend', () => {
+               VR_LOG('thumbupend');
+               document.querySelectorAll('.menu_plane').forEach(function(e){
+                e.object3D.visible = true;
+                 })
+            });
+            }
+        });
+        
+AFRAME.registerComponent("character-controller", {
+      schema: {
+        pivot: { type: "selector" },
+        snapRotationDegrees: { default: THREE.Math.DEG2RAD * 45 },
+      },
+
+      init: function() {
+
+        this.pendingSnapRotationMatrix = new THREE.Matrix4();
+
+        this.snapRotateLeft = this.snapRotateLeft.bind(this);
+        this.snapRotateRight = this.snapRotateRight.bind(this);
+        
+        this.el.sceneEl.addEventListener('rotateleft', this.snapRotateLeft);
+        this.el.sceneEl.addEventListener('rotateright', this.snapRotateRight);
+      },
+
+      update: function() {
+        this.leftRotationMatrix = new THREE.Matrix4().makeRotationY(this.data.snapRotationDegrees);
+        this.rightRotationMatrix = new THREE.Matrix4().makeRotationY(-this.data.snapRotationDegrees);
+      },
+
+      snapRotateLeft: function() {
+        this.pendingSnapRotationMatrix.copy(this.leftRotationMatrix);
+      },
+
+      snapRotateRight: function() {
+        this.pendingSnapRotationMatrix.copy(this.rightRotationMatrix);
+      },
+
+      tick: (function() {
+        const trans = new THREE.Matrix4();
+        const transInv = new THREE.Matrix4();
+        const pivotPos = new THREE.Vector3();
+        const rotationAxis = new THREE.Vector3(0, 1, 0);
+        const rotationMatrix = new THREE.Matrix4();
+        const rotationInvMatrix = new THREE.Matrix4();
+        const pivotRotationMatrix = new THREE.Matrix4();
+        const pivotRotationInvMatrix = new THREE.Matrix4();
+
+        return function(t, dt) {
+          const root = this.el.object3D;
+          const pivot = this.data.pivot.getObject3D('camera');
+
+          root.updateMatrix();
+
+
+            pivotPos.copy(pivot.position);
+            pivotPos.applyMatrix4(root.matrix);
+            trans.setPosition(pivotPos);
+            transInv.makeTranslation(-pivotPos.x, -pivotPos.y, -pivotPos.z);
+            rotationMatrix.makeRotationAxis(rotationAxis, root.rotation.y);
+            rotationInvMatrix.makeRotationAxis(rotationAxis, -root.rotation.y);
+            pivotRotationMatrix.makeRotationAxis(rotationAxis, pivot.rotation.y);
+            pivotRotationInvMatrix.makeRotationAxis(rotationAxis, -pivot.rotation.y);
+
+            // Translate to middle of playspace (player rig)
+            root.matrix.premultiply(transInv);
+            // Zero playspace (player rig) rotation
+            root.matrix.premultiply(rotationInvMatrix);
+            // Apply snap rotation if necessary
+            root.matrix.premultiply(this.pendingSnapRotationMatrix);
+            // Reapply playspace (player rig) rotation
+            root.matrix.premultiply(rotationMatrix);
+            // Reapply playspace (player rig) translation
+            root.matrix.premultiply(trans);
+            // update pos/rot/scale
+            root.matrix.decompose(root.position, root.quaternion, root.scale);
+
+
+            this.pendingSnapRotationMatrix.identity(); // Revert to identity
+          };
+        })(),
+      });
+        
+      })();
+  </script>  
+  </head>
+  <body>
+    
+<a-scene markdown="
+    
+                   " background="color: white;"
+         >
+ 
+  <a-assets>
+    <img id="checkers" src="https://i.imgur.com/xn7lVCw.jpg"/>
+    <a-asset-item id="md" src="article"></a-asset-item>
+    <a-mixin id="offset" position="0 0 -1"></a-mixin>
+  </a-assets>
+  
+  <a-entity markdown="src: #md; wrapCount: 80" position="0 1.6 -1" rotation="0 -60 0" mixin="offset"></a-entity>
+  
+<!--   <a-link href="https://chip-harrier.glitch.me" title="Chip" image="#checkers" position="3 0 -10"></a-link>
+  <a-link href="https://wary-fish.glitch.me" title="Fish" image="#checkers" position="6 0 -10"></a-link>
+  <a-link href="https://puzzling-butterfly.glitch.me" title="Butterfly" image="#checkers" position="9 0 -10"></a-link>
+  <a-link href="https://marked-carriage.glitch.me" title="Marked" image="#checkers" position="12 0 -10"></a-link>
+  <a-link href="https://broad-revolve.glitch.me" title="Revolver" image="#checkers" position="15 0 -10"></a-link>
+  <a-link href="https://berry-ski.glitch.me" title="Berry" image="#checkers" position="0 0 -10"></a-link>
+  <a-link href="https://troubled-car.glitch.me" title="Car" image="#checkers" position="-3 0 -10"></a-link>
+  <a-link href="https://workable-form.glitch.me" title="Form" image="#checkers" position="-6 0 -10"></a-link>
+  <a-link href="https://pushy-interest.glitch.me" title="Pushy" image="#checkers" position="-9 0 -10"></a-link>
+  <a-link href="https://scarce-asp.glitch.me" title="ASP" image="#checkers" position="-12 0 -10"></a-link>
+  <a-link href="https://nifty-alibi.glitch.me" title="Nifty" image="#checkers" position="-15 0 -10"></a-link>
+     -->
+      
+      <a-sky color="#000"></a-sky>
+          
+      <!-- floor -->
+      <a-plane position="-0.012 -3.25 -0.34" width="40" height="40" color="grey" shadow="" geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0" material="src: #checkers; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"></a-plane>
+      
+      <!-- plane with photo for testing -->
+<!-- <a-plane src="https://i.imgur.com/DAmG4Pg.png" position="0 2 -5" rotate="0 0 0" width="4" height="2.5" depth=".001" rotation="0 0 0" color="white" side="both">
+         <a-animation attribute="position" begin="click" to="-4 0 -3" dur="700"
+               ease="bounce"
+               fill="forwards"
+               direction="alternate"></a-animation>  
+         <a-animation attribute="scale"
+                     to="1 1 1"
+                     begin="click"
+                     dur="700"
+                     ease="bounce"
+                     fill="forwards"
+                     direction="alternate"></a-animation>
+          <a-animation attribute="rotation"
+                     to="0 45 0"
+                     begin="click"
+                     dur="700"
+                     ease="bounce"
+                     fill="forwards"
+                     direction="alternate"></a-animation>
+          </a-plane> -->
+                     
+      <a-entity id="cameraRig" character-controller="pivot: #head">
+        
+<!--       <a-plane id="cat" class="menu_plane dog snail cloud" side="double" material="metalness: 0.5; roughness: 0; color: purple" position="0 0 -3" scale="1 0.5 0" rotation="-45 0 0" bella>
+      <a-animation attribute="scale"
+               dur="300"
+               fill="forwards"
+               to="1 0.5 0"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="0"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+      </a-plane>
+        
+      <a-plane id="dog" class="menu_plane cat snail cloud" side="double" material="metalness: 0; roughness: 0.5; color: blue" position="3 0 0" scale="1 0.5 0" rotation="-45 -90 0"  citizen>
+      <a-animation attribute="scale"
+               dur="300"
+               fill="forwards"
+               to="1 0.5 0"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="0"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+      </a-plane>
+        
+      <a-plane id="snail" class="menu_plane cat dog cloud" side="double" material="metalness: 0.1; roughness: 0; color: green" position="-3 0 0" scale="1 0.5 0" rotation="-45 90 0" dragon>
+      <a-animation attribute="scale"
+               dur="300"
+               fill="forwards"
+               to="1 0.5 0"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="0"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+      </a-plane>
+      
+      <a-plane id="cloud" class="menu_plane cat dog snail" side="double" material="metalness: 0; roughness: 0.1; color:red" position="0 0 3" scale="1 0.5 0" rotation="-45 -180 0" apple>
+            <a-animation attribute="scale"
+                     dur="300"
+                     fill="forwards"
+                     to="1 0.5 0"
+                     direction="normal"
+                     begin="open_the_menu">
+            </a-animation>
+            <a-animation attribute="scale"
+                     dur="0"
+                     fill="forwards"
+                     to="0 0 0"
+                     direction="normal"
+                     begin="close_the_menu">
+           </a-animation>
+        </a-plane> -->
+        
+<!---
+      <a-box id="menu_plane1" class="menu_plane" position="0 0.5 -2" scale="0 0 0" rotation="0 45 0" color="#4CC3D9" shadow
+             event-set__enter="_event: mouseenter; color: #026fc9"
+             event-set__leave="_event: mouseleave; color: #4CC3D9" store>
+        
+         <a-animation attribute="position"
+               dur="1000"
+               fill="forwards"
+               to="1 .5 -2"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="1000"
+               fill="forwards"
+               to="1 1 1"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        
+        <a-animation attribute="position"
+               dur="1000"
+               fill="forwards"
+               to="0 0.5 -2"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="1000"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+
+
+      </a-box>
+      <a-box id="menu_plane2" class="menu_plane itemclass" position="0 0.5 -2" scale="0 0 0" rotation="0 45 0" color="#4CC3D9" shadow
+             event-set__enter="_event: mouseenter; color: #026fc9"
+             event-set__leave="_event: mouseleave; color: #4CC3D9" store>
+         <a-animation attribute="position"
+               dur="1000"
+               fill="forwards"
+               to="-1 .5 -2"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="1000"
+               fill="forwards"
+               to="1 1 1"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="position"
+               dur="1000"
+               fill="forwards"
+               to="0 0.5 -2"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="1000"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+     </a-box>
+     <a-box id="menu_plane3" class="menu_plane" position="0 0.5 -2" scale="0.01 0 0" rotation="0 45 0" color="#4CC3D9" shadow
+             event-set__enter="_event: mouseenter; color: #026fc9"
+             event-set__leave="_event: mouseleave; color: #4CC3D9" store>
+        
+       <a-animation attribute="position"
+               dur="1000"
+               fill="forwards"
+               to="1 2.5 -2"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+       <a-animation attribute="scale"
+               dur="1000"
+               fill="forwards"
+               to="1 1 1"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="position"
+               dur="1000"
+               fill="forwards"
+               to="0 0.5 -2"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+       <a-animation attribute="scale"
+               dur="1000"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+      </a-box>
+      <a-box id="menu_plane4" class="menu_plane" position="0 0.5 -2" scale="0 0 0" rotation="0 45 0" color="#4CC3D9" shadow
+             event-set__enter="_event: mouseenter; color: #026fc9"
+             event-set__leave="_event: mouseleave; color: #4CC3D9" store>
+        <a-animation attribute="position"
+               dur="1000"
+               fill="forwards"
+               to="-2 3.5 -6"
+               direction="normal"
+               begin="click"></a-animation>
+        <a-animation attribute="scale"
+               dur="1000"
+               fill="forwards"
+               to=".5 2 .5"
+               direction="normal"
+               begin="click"></a-animation>
+        <a-animation attribute="position"
+               dur="1000"
+               fill="forwards"
+               to="-1 2.5 -2"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="1000"
+               fill="forwards"
+               to="1 1 1"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="position"
+               dur="1000"
+               fill="forwards"
+               to="0 0.5 -2"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="1000"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+      </a-box>-->
+                
+                        
+                <a-entity id="head" camera wasd-controls look-controls fov="180"></a-entity>
+
+                <a-entity id="left-hand" teleport-controls="startEvents: thumbdownstart; endEvents: thumbdownend; cameraRig: #cameraRig; teleportOrigin: #head;" thumb-controls thumb-movement-controls laser-controls raycaster="objects: .clickable; .links; far: 50" line="color: blue; opacity: 2; thickness: 7"></a-entity>
+                <a-entity id="right-hand" teleport-controls="startEvents: thumbdownstart; endEvents: thumbdownend; cameraRig: #cameraRig; teleportOrigin: #head;"
+                            thumb-controls thumb-movement-controls laser-controls raycaster="objects: .clickable; .links; far: 50" line="color: blue; opacity: 1; thickness: 7"></a-entity>
+                <a-entity ></a-entity>
+      </a-entity>
+
+<!--       <a-text id="vr_console" font="dejavu" geometry="primitive:plane; width: 4; height: 4" material="side:double; color: #000000" position="-4.5 0 -7" baseline="bottom" anchor="center" align="left" width="3.5"
+              value="Hello Sans"></a-text> -->
+    
+      </a-scene>
+  </body>
+</html>
+
+<!--Thanks to Brian Peiris from @MozillaReality and formerly from @AltspaceVR for writing a new version of his "Character-Controller" component for the community of WebVR hackers. This allows us to turn left or turn right based on pressing left or right on the trackpad in VR. -->
+
+<!--/*// makes other stuff scale to zero fast
+                  
+                  AFRAME.registerComponent("bella", {
+                  init: function() {
+                  this.el.addEventListener("mouseenter", (e) => {
+                   VR_LOG('bella')
+                   let bitems = document.querySelectorAll(".cat")
+                    bitems.forEach(function(el) {
+                        el.object3D.scale.set(0, 0, 0);
+                    })
+                 });
+                 
+                }
+              })
+              */-->
