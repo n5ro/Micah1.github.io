@@ -13,7 +13,7 @@
     <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
     <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
-    
+    <script src="https://unpkg.com/aframe-markdown/dist/aframe-markdown.min.js">
     <script>
       (function() {
         var log_history = [];
@@ -327,8 +327,9 @@ AFRAME.registerComponent("character-controller", {
   <body>
     
 <a-scene markdown="
-    
-                   " background="color: white;"
+        normalFont: https://unpkg.com/aframe-markdown@0.1.2/fonts/Roboto-msdf.json; 
+        boldFont: https://unpkg.com/aframe-markdown@0.1.2/fonts/Roboto-Bold-msdf.json;
+      " background="color: white;"
          >
  
   <a-assets>
