@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame">
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="my-laser-controls.js"></script>
+    <script src="https://unpkg.com/aframe-thumb-controls-component@1.1.0/dist/aframe-thumb-controls-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-log-component/dist/aframe-log-component.min.js"></script> 
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+  </head>
+  <body>
+    
+     <script>
+      
+      var log_history = [];
+        var menu_open = true;
+        var MAX_LOGS = null;
+        function VR_LOG(data) {
+            log_history.push(JSON.stringify(data));
+            if (MAX_LOGS && log_history.length > MAX_LOGS) {
+              log_history.shift()
+            }
+            const console = document.getElementById('vr_console');
+            if (console) { console.setAttribute('value', log_history.join('\n')); }
+        } 
+         window.onerror = e => VR_LOG("error" + e);
+        const CLAMP_VELOCITY = 0.01;
+        const MAX_DELTA = 0.2;
+        const EPS = 10e-6;
+        const MAX_WARNINGS = 10;
+        const PI_2 = Math.PI / 2;
+       
+     
+
+
+
+       
+AFRAME.registerComponent('thumb-movement-controls', {
+          init: function () {
+            this.el.addEventListener('thumbupstart', () => {
+              VR_LOG('thumblaserstart');
+              });
+            this.el.addEventListener('thumbupend', () => {
+               VR_LOG('thumblaserend');
+            });
+            this.el.addEventListener('thumbrightstart', () => {
+               VR_LOG('thumbrightstart');
+            });
+            this.el.addEventListener('thumbrightend', () => {
+               VR_LOG('thumbrightend');
+            });
+            this.el.addEventListener('thumbleftstart', () => {
+               VR_LOG('thumbleftstart');
+            });
+            this.el.addEventListener('thumbleftend', () => {
+               VR_LOG('thumbleftend');
+            });
+            this.el.addEventListener('thumbdownstart', () => {
+               VR_LOG('thumbteleportstart');
+            });
+            this.el.addEventListener('thumbdownend', () => {
+               VR_LOG('thumbteleportend');
+            });
+            
+
+     }
+});
+       
+ 
+    </script>
+    
+    <a-scene background="color: #ECECEC">
+      <a-sky color="#FFF"></a-sky>
+      <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow></a-box>
+      <!-- box for photos -->
+       <a-box src="https://i.imgur.com/DAmG4Pg.png" position="0 2 -5" rotate="0 0 0" width="4" height="2.5" depth=".001" rotation="0 0 0" color="white" shadow>
+         <a-animation-component attribute="position" begin="click" to="-4 0 -3" dur="700"
+               ease="bounce"
+               fill="forwards"
+               direction="alternate"></a-animation-component>  
+         <a-animation-component attribute="scale"
+                     to="1 1 1"
+                     begin="click"
+                     dur="700"
+                     ease="bounce"
+                     fill="forwards"
+                     direction="alternate"></a-animation-component>
+          <a-animation-component attribute="rotation"
+                     to="0 45 0"
+                     begin="click"
+                     dur="700"
+                     ease="bounce"
+                     fill="forwards"
+                     direction="alternate"></a-animation-component>
+          </a-box>]
+      
+      <a-text id="vr_console" font="dejavu" geometry="primitive:plane; width: 4; height: 4" material="side:double; color: #000000" position="-4.5 0 -7" baseline="bottom" anchor="center" align="left" width="3.5" value="Hello Sans"></a-text>
+      
+      <a-entity id="cameraRig" character-controller="pivot: #head"></a-entity>
+      <a-entity id="head" camera wasd-controls look-controls fov="180"></a-entity>
+      
+      <!--<a-entity id="leftHand" thumb-controls thumb-movement-controls my-laser-controls="hand: left" controller-cursor="downEvents: thumbupstart; upEvents: thumbupend"></a-entity>-->
+      <a-entity id="rightHand" thumb-controls thumb-movement-controls my-laser-controls="hand: right"></a-entity>
+       
+      
+    </a-scene>
+    
+   
+    
+    
+  </body>
+</html>
