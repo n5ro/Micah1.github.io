@@ -326,21 +326,17 @@ AFRAME.registerComponent("character-controller", {
   </head>
   <body>
     
-<a-scene markdown="
-        normalFont: https://unpkg.com/aframe-markdown@0.1.2/fonts/Roboto-msdf.json; 
-        boldFont: https://unpkg.com/aframe-markdown@0.1.2/fonts/Roboto-Bold-msdf.json;
-      " background="color: white;"
-         >
+<a-scene markdown="normalFont: https://unpkg.com/aframe-markdown@0.1.2/fonts/Roboto-msdf.json; boldFont: https://unpkg.com/aframe-markdown@0.1.2/fonts/Roboto-Bold-msdf.json;" background="color: white;">
  
   <a-assets>
     <img id="checkers" src="https://i.imgur.com/xn7lVCw.jpg"/>
-    <a-asset-item id="md" src="./article.md"></a-asset-item>
-    <a-mixin id="offset" position="0 0 -1"></a-mixin>
+<!--     <a-asset-item id="md" src="./article.md"></a-asset-item>
+    <a-mixin id="offset" position="0 0 -1"></a-mixin> -->
   </a-assets>
   
   <a-entity markdown="src: #md; wrapCount: 80" position="0 1.6 -1" rotation="0 -60 0" mixin="offset"></a-entity>
   
-<!--   <a-link href="https://chip-harrier.glitch.me" title="Chip" image="#checkers" position="3 0 -10"></a-link>
+  <a-link href="https://chip-harrier.glitch.me" title="Chip" image="#checkers" position="3 0 -10"></a-link>
   <a-link href="https://wary-fish.glitch.me" title="Fish" image="#checkers" position="6 0 -10"></a-link>
   <a-link href="https://puzzling-butterfly.glitch.me" title="Butterfly" image="#checkers" position="9 0 -10"></a-link>
   <a-link href="https://marked-carriage.glitch.me" title="Marked" image="#checkers" position="12 0 -10"></a-link>
@@ -351,7 +347,7 @@ AFRAME.registerComponent("character-controller", {
   <a-link href="https://pushy-interest.glitch.me" title="Pushy" image="#checkers" position="-9 0 -10"></a-link>
   <a-link href="https://scarce-asp.glitch.me" title="ASP" image="#checkers" position="-12 0 -10"></a-link>
   <a-link href="https://nifty-alibi.glitch.me" title="Nifty" image="#checkers" position="-15 0 -10"></a-link>
-     -->
+    
       
       <a-sky color="#000"></a-sky>
           
