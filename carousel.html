@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame">
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script>
+ (function() {
+       
+AFRAME.registerComponent("bella", {
+                init: function() {
+                  this.el.addEventListener("click", (e) => {
+                   
+                   document.getElementById("cat").emit("face_position") 
+                   let bitems = document.querySelectorAll(".cat")
+                    bitems.forEach(function(el) {
+                        el.object3D.scale.set(0, 0, 0);
+                    })
+                 });
+                }
+              })
+
+AFRAME.registerComponent("citizen", {
+                        init: function() {
+                        this.el.addEventListener("click", (e) => {
+                         
+                         let mitems = document.querySelectorAll(".dog")
+                            mitems.forEach(function(el) {
+                                el.object3D.scale.set(0, 0, 0);
+                              });   
+                          });
+                          
+  }
+})
+                        
+AFRAME.registerComponent("dragon", {
+                        init: function() {
+                          this.el.addEventListener("click", (e) => {
+                             
+                            let ditems = document.querySelectorAll(".snail")
+                            ditems.forEach(function(el) {
+                                el.object3D.scale.set(0, 0, 0);
+                            });
+                          });
+                        }
+})
+                
+AFRAME.registerComponent("apple", {
+                        init: function() {
+                        this.el.addEventListener("click", (e) => {
+                           
+                            let aitems = document.querySelectorAll(".cloud")
+                            aitems.forEach(function(el) {
+                                el.object3D.scale.set(0, 0, 0);
+                            });
+                        });
+                        }
+});
+
+var eventNames = ["event1", "event2", "event3", "event4"];
+var eventNamesIndex = -1;
+
+AFRAME.registerComponent("next", {
+   init: function() {
+         this.el.addEventListener("click", (e) => {
+         eventNamesIndex++;
+           if (eventNamesIndex > 3) {
+           eventNamesIndex = 0;
+         }
+         document.getElementsByClassName('events')[eventNamesIndex].emit(eventNames[eventNamesIndex]);
+   console.log(eventNames[eventNamesIndex]);
+   });
+}}); 
+   
+   
+AFRAME.registerComponent("prev", {
+   init: function() {
+         this.el.addEventListener("click", (e) => {
+          eventNamesIndex--;
+           if (eventNamesIndex < 0) {
+           eventNamesIndex = 3;
+         }
+         document.getElementsByClassName('events')[eventNamesIndex].emit(eventNames[eventNamesIndex]);
+   console.log(eventNames[eventNamesIndex]);     
+   });
+         
+}}); 
+   
+   
+   
+   
+})();  
+    </script>
+  </head>
+  <body>
+    <a-scene>
+      <a-box id="events" class="events" position="-3 0.5 -4" rotation="0 45 0" color="#4CC3D9" shadow>
+        <a-animation attribute="position"
+                     direction="alternate"
+                     repeat="1"
+               begin="event1"
+               dur="1000"
+               fill="forward"
+               to="0 0 -3"
+               ></a-animation></a-box>
+      
+      <a-sphere class="events" position="-2 1.25 -6" radius="1.25" color="#EF2D5E" shadow>
+        <a-animation attribute="position"
+                     direction="alternate"
+                     repeat="1"
+               begin="event2"
+               dur="1000"
+               fill="forwards"
+               to="0 0 -3"
+               ></a-animation></a-sphere>
+      <a-cylinder class="events" position="-1 0.75 -4" radius="0.5" height="1.5" color="#FFC65D" shadow>
+        <a-animation attribute="position"
+                     direction="alternate"
+                     repeat="1"
+               begin="event3"
+               dur="1000"
+               fill="forwards"
+               to="0 0 -3"
+               ></a-animation></a-cylinder>
+      <a-plane class="events" position="-2 0 -5" rotation="-90 0 0" width="4" height="4" color="#7BC8A4" shadow>
+        <a-animation attribute="position"
+                     direction="alternate"
+                     repeat="1"
+               begin="event4"
+               dur="1000"
+               fill="forwards"
+               to="0 0 -3"
+               ></a-animation></a-plane>
+   
+      
+<a-plane id="next_button" position="0 0.5 -1" rotation="-30 0 0"
+               geometry="width: 1; primitive: plane"
+               text="width: 1; value: Next" 
+               color="blue" next></a-plane>
+  
+      
+ <a-entity id="prev_button"
+  position="-2 0.5 -2"
+  geometry="width: 1; primitive: plane"
+  material="color: blue"
+  text="align: center; width: 1; value: Prev" prev></a-entity>
+      
+      
+          <a-plane id="cat" class="menu_plane dog snail cloud" side="double" material="metalness: 0.5; roughness: 0; color: purple" position="0 0 -3" scale="1 0.5 0" rotation="-45 0 0" bella>
+      <a-animation attribute="position"
+               dur="300"
+               fill="forwards"
+               to="0 1 -2"
+               direction="normal"
+               begin="face_position"></a-animation>
+        
+        
+        <a-animation attribute="scale"
+               dur="300"
+               fill="forwards"
+               to="1 0.5 0"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="0"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+      </a-plane>
+        
+      <a-plane id="dog" class="menu_plane cat snail cloud" side="double" material="metalness: 0; roughness: 0.5; color: blue" position="3 0 0" scale="1 0.5 0" rotation="-45 -90 0"  citizen>
+      <a-animation attribute="scale"
+               dur="300"
+               fill="forwards"
+               to="1 0.5 0"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="0"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+      </a-plane>
+        
+      <a-plane id="snail" class="menu_plane cat dog cloud" side="double" material="metalness: 0.1; roughness: 0; color: green" position="-3 0 0" scale="1 0.5 0" rotation="-45 90 0" dragon>
+      <a-animation attribute="scale"
+               dur="300"
+               fill="forwards"
+               to="1 0.5 0"
+               direction="normal"
+               begin="open_the_menu"></a-animation>
+        <a-animation attribute="scale"
+               dur="0"
+               fill="forwards"
+               to="0 0 0"
+               direction="normal"
+               begin="close_the_menu"></a-animation>
+      </a-plane>
+      
+      <a-plane id="cloud" class="menu_plane cat dog snail" side="double" material="metalness: 0; roughness: 0.1; color:red" position="0 0 3" scale="1 0.5 0" rotation="-45 -180 0" apple>
+            <a-animation attribute="scale"
+                     dur="300"
+                     fill="forwards"
+                     to="1 0.5 0"
+                     direction="normal"
+                     begin="open_the_menu">
+            </a-animation>
+            <a-animation attribute="scale"
+                     dur="0"
+                     fill="forwards"
+                     to="0 0 0"
+                     direction="normal"
+                     begin="close_the_menu">
+        </a-animation></a-plane>
+      
+      
+      <a-camera><a-cursor></a-cursor></a-camera>
+    </a-scene>
+  </body>
+</html>
