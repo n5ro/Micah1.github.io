@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Hello, WebVR! • A-Frame</title>
+    <meta name="description" content="Hello, WebVR! • A-Frame">
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component@^5.1.2/dist/aframe-animation-component.min.js"></script>
+    <script>
+ (function() {
+       
+   
+   AFRAME.registerComponent("comehere", {
+              init: function() {
+                   
+                var follower = document.querySelector('#follower');
+                   var caller = document.querySelector('#caller');
+                   var near = 1
+
+                  
+                    caller.addEventListener('click', function(e) {
+                    var position = caller.getAttribute('position')
+                    follower.setAttribute('animation', {
+                      to: {x: position.x, y: position.y, z: position.z-1}
+                    })
+                      
+                      follower.emit('follow')
+                   
+                  });
+                }
+              });
+   
+    })();  
+    </script>
+  </head>
+  <body>
+    <a-scene background="color: white">
+      <a-box color="blue" id="follower" position="2 1 -6" rotation="1 1 1"
+             animation="property: position; easing: easeOutQuad; startEvents: follow;"></a-box>
+<!--     for this code to work as intended the caller has to be the child of another entity 
+because my button "caller" entity is a child of another entity that wraps around the camera rig   -->
+      <a-plane comehere><a-box color="green" id="caller" position="-2 1 -6" rotation="2 1 2"></a-box></a-plane>
+      
+      
+      
+      <a-camera><a-cursor fuse="false"></a-cursor></a-camera>
+    </a-scene>
+  </body>
+</html> 
