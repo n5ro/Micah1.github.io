@@ -78,34 +78,34 @@ AFRAME.registerComponent('my-laser-controls', {
 
   config: {
     'daydream-controls': {
-      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']}
+      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']},
     },
 
     'gearvr-controls': {
-      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']}
+      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']},
       raycaster: {origin: {x: 0, y: 0.0005, z: 0}}
     },
 
     'oculus-go-controls': {
-      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']}
+      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']},
       raycaster: {origin: {x: 0, y: 0.0005, z: 0}}
     },
 
     'oculus-touch-controls': {
-      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']}
+      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']},
       raycaster: {origin: {x: 0, y: 0, z: 0}}
     },
 
     'vive-controls': {
-      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']}
+      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']},
     },
 
     'vive-focus-controls': {
-      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']}
+      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']},
     },
 
     'windows-motion-controls': {
-      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']}
+      cursor: {downEvents: ['thumbupstart', 'triggerdown'], upEvents: ['thumbupend', 'triggerup']},
       raycaster: {showLine: false}
     }
   },
